@@ -1,41 +1,32 @@
-/*
-App
-processing - options
-pages
-modules
-components
-widjets - options
-asset - options
-atom
-*/
-
-//Подключаем нативный модуль
+//Подключаем модуль поддержки протокла HTTP
 const http = require('http');
-
-//Подключаем модуль файловой системы
-const fs = require('fs');
+//Подключаем модуль управления файлами
+const fs = require('fs'); //file system
 const path = require('path');
 const express = require('express');
-const { default: App } = require('./front/src/App');
 
-const PORT = 8084;
+const PORT = 8082;
 
-//Myme Type
+//Майм типы данных и расширения файлов
 const mymeType = {
     '.html' : 'text/html',
     '.tmpl' : 'text/html',
     '.js' : 'text/javascript',
-    '.png' : 'image/png', //jpg, jpeg
-    '.jpg' : 'image/jpg', //jpeg
+    '.css' : 'text/css',
+    '.png' : 'image/png',
+    '.jpg' : 'image/jpg',
+    '.jpeg' : 'image/jpg',
+    '.gif' : 'image/gif',
     '.svg' : 'image/svg+xml',
-    '.woff' : 'application/font-woff', //ttf
-    '.eot' : 'application/vnd.ms-fontobject'
-}
+    '.woff' : 'application/font-woff',
+    '.eot' : 'application/vnd.ms-fontobject',
+    '.ttf' : 'application/font-ttf'
+};
 
-const staticFile = (res, filePath, ext = '.html') => {
+const staticFile = (res, filePath, ext) => {
     let params = {};
     if(mymeType[ext].match('text/')) {
-        params = {encoding: 'utf8', flag: 'r'};
+        params = {encoding: 'utf8', flag: 'r'}; 
     }
 
     fs.readFile('.' + filePath, params, (err, data) => {
@@ -50,48 +41,42 @@ const staticFile = (res, filePath, ext = '.html') => {
     });
 }
 
-const server = http.createServer(function(req, res) { //req - request, res - response
+const server = http.createServer(function(req, res) {
     console.log('Server request');
 
-    //mechanism
-    const createPath = (page) => path.resolve(__dirname, 'views', `${page}.html`);
+    const createPath = (page) => path.resolve(__dirname, 'views', `${page}.tmpl`);
+    const url = req.url;
 
     let basePath = '';
-    const url = req.url;
 
     switch(url) {
         case '/':
             basePath = '/index.html';
         break;
 
-        case '/index.html':
-            res.statusCode = 301; //Контролируемый редирект
-            res.setHeader('Location', '/');
-        break;
-
-        case '/brands/':
+        case '/brands':
             basePath = createPath('brands');
         break;
 
-        default:
+        default: 
             const extname = String(path.extname(url)).toLowerCase();
             if(extname in mymeType) {
+                console.log(url);
+                console.log(extname);
                 staticFile(res, url, extname);
             }
             else {
-                basePath = createPath('404');
-                res.statusCode = 404;
+                console.log('404');
                 res.end();
             }
         break;
     }
 
     if(basePath != '') {
-        staticFile(res, basePath);
+        staticFile(res, basePath, '.html');
     }
-
 });
 
-server.listen(PORT, "localhost", function(err) {
-    (err) ? console.log(err) : console.log('Server listen');
+server.listen(PORT, 'localhost', function() {
+    console.log('Server start listen');
 });

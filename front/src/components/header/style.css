@@ -1,0 +1,39 @@
+header {
+    display:flex;
+    background:#eee;
+    border-bottom:1px solid #aaa;
+    justify-content: space-between;
+    padding:10px 30px;
+}
+
+header .LogoGroup {
+    display:flex;
+    flex-wrap:wrap;
+    width:200px;
+}
+
+header .LogoGroup h1{
+    display:block;
+    width:100%;
+}
+
+header .LogoGroup h1 {
+    font-size:12px;
+}
+
+header menu {
+    display:flex;
+    list-style:none;
+    margin:0;
+    padding:0;
+    gap: 15px;
+    line-height: 30px;
+}
+
+header menu li {
+    cursor: pointer;
+}
+
+header .timer {
+    line-height: 30px;
+}

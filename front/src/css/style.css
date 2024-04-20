@@ -1,0 +1,20 @@
+h1 {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+h2 {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+.container {
+    display:flex;
+    flex-wrap: wrap;
+    gap:15px;
+}

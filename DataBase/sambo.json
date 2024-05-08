@@ -1,0 +1,64 @@
+[{
+    "_id": {
+      "$oid": "65a7f00e44900e433dc9df97"
+    },
+    "AUTHOR": "Самбовка",
+    "TITLE": "Самбовка красная синяя",
+    "PRICE": 4000,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a7f151343c3171a72bfc1f"
+    },
+    "AUTHOR": "перчатки",
+    "TITLE": "8умц  20умц",
+    "PRICE": 3200,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a7f273343c3171a72bfc20"
+    },
+    "AUTHOR": "капа",
+    "TITLE": "капа по размеру зубов",
+    "PRICE": 800,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a7f273343c3171a72bfc21"
+    },
+    "AUTHOR": "шетки",
+    "TITLE": "шетки на ноги красные синие ",
+    "PRICE": 500,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a7773bcd85224383362a74"
+    },
+    "AUTHOR": "ракушка",
+    "TITLE": "зашита паха",
+    "PRICE": 250,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a777dfcd85224383362a75"
+    },
+    "AUTHOR":"шлем ",
+    "TITLE": "боксерский шлем",
+    "PRICE" : 3000,
+    "COUNTRY": "Russia"
+  },
+  {
+    "_id": {
+      "$oid": "65a777dfcd85224383362a76"
+    },
+    "AUTHOR": "тренировки ",
+    "TITLE": "тренировки 3 раза в неделю",
+    "PRICE": 3500,
+    "COUNTRY": "Russia"
+  }
+]

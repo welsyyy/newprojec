@@ -1,8 +1,6 @@
-import brands from "./brands.js";
+import clothes from "./clothes.js";
 import menu from "./menu.js";
-import models from "./models.js";
-import owners from "./owners.js";
-import cards from "./cards.js";
-import services from './services.js';
 
-export default {brands, menu, models, owners, cards, services};
+
+
+export default {clothes,menu };

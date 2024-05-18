@@ -1,4 +1,4 @@
-const books = {
+const clothes = {
     _id: {},
     
         TITLE: {
@@ -12,7 +12,7 @@ const books = {
             //list: []
         },
         PRICE: {
-            type: 'Number',
+            type: 'String',
             require: true,
             default: 0,
             loc: "Цена",
@@ -32,4 +32,4 @@ const books = {
         }
     };
 
-    export default books;
+    export default clothes;

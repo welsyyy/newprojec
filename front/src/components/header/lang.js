@@ -1,9 +1,7 @@
 const lang = {
     index: "Главная",
-    books: "Книги",
-    cards: "Карточки",
-    menu: "Меню",
-    owners: "Читатели"
+    clothes: "Предметы",
+    menu: "Меню"
 }
 
 export default lang;

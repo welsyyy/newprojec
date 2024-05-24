@@ -1,64 +1,181 @@
 .simple-table {
-    margin:20px auto;
-    border:0;
-    width: calc(-400px + 100%);
+    margin:20px 0;
+    border:1px solid #aaa;
+    border-radius: 4px;
+    max-width:70%;
+    width:100%;
     height: fit-content;
+    font-size: 1rem;
+    font-family: Source Sans\ 3, sans-serif;
 }
 
-.simple-table tr {
-    height: max-content;
-}
-
-.simple-table thead th {
+.simple-table thead tr th {
     padding:5px 20px;
-    background: #a0a3a7;
+    background: #1a1a1a;
     color: #fff;
 }
 
-.simple-table thead th.sortable {
-    cursor: pointer;
+.simple-table thead tr th.sortable {
+    cursor:pointer;
+}
+
+.simple-table thead tr th.sortable span {
     position:relative;
+    display:inline-block;
+    width:20px;
+    height:20px;
 }
 
-.simple-table thead th.sortable:after {
-    content: ' ';
-    margin-left:5px;
-    width:10px;
-    display:inline-block
+.simple-table thead tr th.sortable span:after {
+    content: '';
+    position:absolute;
+    text-align:center;
+    width:20px;
+    height:20px;
+    top:0;
+    left:0;
 }
 
-.simple-table thead th.sortable.ASC:after {
-    content: '⇑';
-    margin-left:5px;
+.simple-table thead tr th.sortable.ASC span:after {
+    content: '>';
+    rotate: 90deg;
+    left:-4px;
 }
 
-.simple-table thead th.sortable.DESC:after {
-    content: '⇓';
-    margin-left:5px;
+.simple-table thead tr th.sortable.DESC span:after {
+    content: '>';
+    rotate: -90deg;
+}
+
+.simple-table tbody tr {
+    transition: all .15s ease-in;
 }
 
 .simple-table tbody tr:nth-child(even) {
-    background: #e3e3e3;
+    background: #1976D220;
 }
 
-.simple-table tbody td {
+.simple-table tbody tr:hover {
+    background:#6b6b6b;
+    color:#fff;
+}
+
+.simple-table tbody tr:focus {
+    background-color:#6b6b6b;
+    outline: 0;
+}
+
+.simple-table tbody tr td {
     padding:5px 20px;
 }
 
+/* edit */
 .simple-table button.edit {
+    border: 1px solid #333;
+    border-radius:10px;
+    transition: .2s linear;
+    background-color: #fff;
+    background-image:url('./images/pencil.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 28px;
+    height: 28px;
+    margin:3px;
+    cursor:pointer;
+}
+
+.simple-table button.edit:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark .simple-table button.edit {
+    background: #444;
+    background-image:url('./images/pencil.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    width: 28px;
+    height: 28px;
+    margin:3px;
+    cursor:pointer;
+}
+
+.App.dark .simple-table button.edit:hover {
+    box-shadow: 0 0 0 2px #444, 0 0 0 4px #777;
+}
+
+/* drop */
+.simple-table button.drop {
     border:1px solid #333;
-    background: #fff url(./images/edit.png) no-repeat center;
+    border-radius:10px;
+    transition: .2s linear;
+    background-color: #fff;
+    background-image:url('./images/delete.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 28px;
     height: 28px;
     margin:3px;
     cursor: pointer;
 }
 
-.simple-table button.drop {
+.simple-table button.drop:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark .simple-table button.drop {
+    background: #444;
+    background-image:url('./images/delete.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    width: 28px;
+    height: 28px;
+    margin:3px;
+    cursor:pointer;
+}
+
+.App.dark .simple-table button.drop:hover {
+    box-shadow: 0 0 0 2px #444, 0 0 0 4px #777;
+}
+
+/* star */
+.simple-table button.star {
     border:1px solid #333;
-    background: #fff url(./images/delete.png) no-repeat center;
+    border-radius:10px;
+    transition: .2s linear;
+    background-color: #fff;
+    background-image:url('./images/star.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 28px;
     height: 28px;
     margin:3px;
     cursor: pointer;
+}
+
+.simple-table button.star:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark .simple-table button.star {
+    background: #444;
+    background-image:url('./images/star.png');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    width: 28px;
+    height: 28px;
+    margin:3px;
+    cursor:pointer;
+}
+
+.App.dark .simple-table button.star:hover {
+    box-shadow: 0 0 0 2px #444, 0 0 0 4px #777;
 }

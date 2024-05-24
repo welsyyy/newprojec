@@ -1,5 +1,4 @@
-export default class Route
-{
+export default class Route {
     constructor() {
         this.url = window.location.pathname.replace('/', '');
     }

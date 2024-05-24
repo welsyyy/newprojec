@@ -1,7 +1,10 @@
 const lang = {
-    index: "Главная",
-    clothes: "Предметы",
-    menu: "Меню"
+    index: 'Главная',
+    rating: 'Рейтинг',
+    models: 'Модели',
+    menu: 'Меню',
+    owners: 'Владельцы',
+    services: 'Услуги'
 }
 
 export default lang;

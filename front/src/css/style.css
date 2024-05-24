@@ -1,9 +1,8 @@
 .content {
     display:block;
-    max-width:400px; /* em, rem, inch, sm, 100%, 100vh, 100vw */
+    max-width:400px;
     margin:0 auto;
 }
-
 
 h1 {
     font-size:20px;
@@ -18,5 +17,25 @@ h2 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     margin:0;
-    border-bottom:1px solid #ccc;
+    display:block;
+}
+
+
+.simple-table {
+    margin:20px 0;
+    border:0;
+}
+
+.simple-table thead tr th {
+    padding:5px 20px;
+    background: #1976D2;
+    color: #fff;
+}
+
+.simple-table tbody tr:nth-child(even) {
+    background: #1976D220;
+}
+
+.simple-table tbody tr td {
+    padding:5px 20px;
 }

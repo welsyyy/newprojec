@@ -1,92 +1,86 @@
-import { useCallback, useState, useEffect } from "react";
-import './style.css';
-import config from "../../params/config";
+import {useState, useCallback, useEffect} from 'react';
+import config from '../../params/config.js';    
 
-export default function Table({nameTable, onChange, query = ''})
-{
+import { Rating, RoundedStar } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
+import './style.css';
+import './images/delete.png';
+import './images/pencil.png';
+import './images/star.png';
+
+export default function Table({nameTable, onChange, query = ''}) {
     const [table, setTable] = useState({
         header: [],
         body: [],
+        footer: [],
         sim: []
     });
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
+
+    const myStyles = {
+        itemShapes: RoundedStar,
+        activeFillColor: '#ffb700',
+        inactiveFillColor: '#fbf1a9'
+    };
 
     const fetchTable = useCallback(async () => {
         setLoading(true);
-        if(nameTable) {
-            let getRequest = window.location.search;
-            let urlRequest = config.api + 'get/' + nameTable + '/';
-    
-            if(query !== '') {
-                urlRequest += '?q=' + query;
-            }
-    
-            if(getRequest !== '' && query === '') {
-                urlRequest += getRequest;
-            }
-    
-            await getFetch(urlRequest);
+        let getReq = window.location.search;
+        let urlRequest = config.fullApi + nameTable +'/';
+
+        if(query != '') {
+            urlRequest += '?q=' + query;
         }
-        
+
+        if(query == '' && getReq != '') {
+            urlRequest += getReq;
+        }
+
+        await getFetch(urlRequest);
         setLoading(false);
-    }, [nameTable, query]);
+    }, [nameTable, onChange]);
 
     useEffect(
-        () => {
-            fetchTable()
-        }, [fetchTable]
-    );
+        () => {fetchTable()}, [fetchTable]
+    )
 
     async function getFetch(url) {
         const response = await fetch(url);
-        const dataTable = await response.json();
+        const unPreparedData = await response.json();
         const data = {
-            header: dataTable.schema,
-            body: dataTable.data,
-            sim: dataTable.sim
-        }
-
-        let title = [];
-        let budget = [];
-
-        data.body.forEach(item => {
-            title.push(item.TITLE);
-
-            if(item.BUDGET)
-                budget.push(item.BUDGET);
-        });
+            header: unPreparedData.head,
+            body: unPreparedData.data,
+            footer: [],
+            sim: unPreparedData.sim
+        };
 
         setTable(data);
     }
 
-    function getHeader(schema = {}) {
+    function getHeader(schema) {
         let header = [];
         for(let i in schema) {
             let obHeader = schema[i];
 
             obHeader.code = i;
-
-            if(i === '_id') {
+            if(i === '_id')
                 header.push({loc: 'ID'});
-            }
-            else {
-                header.push(schema[i]);
-            }
+            else
+                header.push(obHeader);
+        } 
 
-           // header.push((i === '_id') ? 'ID' : schema[i]);
-        }
-
-        header.push({});
+        header.push('');
 
         return (
             <tr>
                 {
                     header.map((item, index) => (
-                        <th key={index}
-                            onClick={setSort}
+                        <th key={index} 
                             data-code={item.code}
+                            onClick={setSort}
                             className={item.sort ? 'sortable' : null}>
-                            {item.loc}
+                                {item.loc}
+                                <span></span>
                         </th>
                     ))
                 }
@@ -96,9 +90,11 @@ export default function Table({nameTable, onChange, query = ''})
 
     async function setSort(event) {
         let th = event.target;
+        let parentRow = th.closest('tr');
+        let allTh = parentRow.querySelectorAll('th');
         let order = th.classList.contains('DESC') ? 'DESC' : 'ASC';
         let code = event.target.dataset.code;
-        let url = config.api + 'get/' + nameTable + '/?sort=' + code + '&order=' + order;
+        let url = config.fullApi + nameTable + '/?sort=' + code + '&order=' + order;
 
         th.classList.add(order);
 
@@ -113,41 +109,48 @@ export default function Table({nameTable, onChange, query = ''})
             th.classList.add('ASC');
         }
     }
-
+    
     function getContent(col, index, sim, schema) {
         let value = '';
 
         if(col.ref) {
             let val = sim[col.collectionName].filter(item => item._id === col._id)[0];
-
-            if(val && val.TITLE)
-                value = val.TITLE;
+            value = val.TITLE;
         }
         else {
             value = col;
 
             let getIndex = 0;
             let curSchema = 0;
+
             for(let i in schema) {
                 if(getIndex === index) {
-                    curSchema = schema[i];
+                    curSchema = schema[i]
                 }
                 getIndex++;
+            }
+
+            if(curSchema.code === '_id') {
+                value = '...' + col.slice(18,25);
+            }
+
+            if(curSchema.type === 'Phone') {
+                let callTo = 'tel:' + col;
+                value = <a href={callTo}>{col}</a>
             }
 
             if(curSchema.type === 'Email') {
                 let mailTo = 'mailto:' + col;
                 value = <a href={mailTo}>{col}</a>
             }
-            
-            if(curSchema.type === 'Phone') {
-                let callTo = 'tel:' + col;
-                value = <a href={callTo}>{col}</a>
-            }
-            
+
             if(curSchema.type === 'Date') {
                 let date = new Date(col);
                 value = Intl.DateTimeFormat('ru').format(date);
+            }
+
+            if(curSchema.type === 'Rating') {
+                value = <Rating style={{ maxWidth: 100 }} value={col} readOnly itemStyles={myStyles} />
             }
         }
 
@@ -158,15 +161,15 @@ export default function Table({nameTable, onChange, query = ''})
         )
     }
 
-    async function edit(e) {
-        const url = config.api + 'get/' + nameTable + '/?id=' + e.target.value;
+    async function edit(event) {
+        const url = config.fullApi + nameTable + '/?id=' + event.target.value;
         const response = await fetch(url);
         const answer = await response.json();
         onChange(answer);
     }
 
-    async function dropElement(e) {
-        const url = config.api + nameTable + '/' + e.target.value + '/';
+    async function drop(event) {
+        const url= config.fullApi + nameTable + '/' + event.target.value + '/';
         const confirmWindow = window.confirm('Уверены?');
         if(confirmWindow) {
             const response = await fetch(url);
@@ -178,31 +181,39 @@ export default function Table({nameTable, onChange, query = ''})
         }
     }
 
-    return(
+    function star(event) {
+        let val = event.target.value;
+        window.location = '/rating?id=' + val;
+    }
+    
+    return (
         <>
-        <table className={nameTable + " simple-table"}>
-            <thead>
-                {!loading && getHeader(table.header)}
-            </thead>
-            <tbody>
-                {
-                    !loading && table.body.map(row => (
-                        <tr key={row._id} id={row._id}>
-                            {
-                            Object.values(row).map((col, index) => (
-                               getContent(col, index, table.sim, table.header)
-                            ))
-                            }
+            <table cellPadding={0} cellSpacing={0} className="simple-table">
+                <thead>
+                    {loading &&  <tr><td>Loading...</td></tr>}
+                    {!loading && getHeader(table.header)}
+                </thead>
+                <tbody>
+                    {loading && <tr><td>Loading...</td></tr>}
 
-                            <td>
-                                <button className='edit' onClick={edit} value={row._id}></button>
-                                <button className='drop' onClick={dropElement} value={row._id}></button>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+                    {
+                        (!loading & table.body.length>0) && table.body.map(row => (
+                            <tr key={row._id} id={row._id} tabindex="0">
+                                { 
+                                    Object.values(row).map((col, index) => (
+                                        getContent(col, index, table.sim, table.header)
+                                    ))
+                                }
+                                <td>
+                                    <button value={row._id} onClick={edit} className='edit'></button>
+                                    <button value={row._id} onClick={drop} className='drop'></button>
+                                    {nameTable === 'game' && <button value={row._id} onClick={star} className='star'></button>}
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         </>
     )
 }

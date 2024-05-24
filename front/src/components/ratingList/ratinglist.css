@@ -1,0 +1,33 @@
+.rating-news-list {
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.rating-news-list .rating-news-card {
+    width:calc(33% - 30px);
+    border:1px solid #eee;
+    padding:10px;
+}
+
+.rating-news-list .rating-news-card span {
+    font-size:14px;
+    margin-top:5px;
+}
+
+.news-card {
+    display:grid;
+    grid-template-columns: repeat(3, 33%);
+}
+
+.news-card .Author {
+    grid-column: span 3;
+    font-family: sans-serif;
+    text-align: justify;
+    line-height: 30px;
+}
+.news-card .game,
+.news-card .video {
+    grid-column: span 3;
+}

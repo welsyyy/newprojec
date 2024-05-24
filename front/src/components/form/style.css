@@ -9,25 +9,25 @@ form.editForm {
     padding:20px;
     background: #f3f3f3;
     border-radius:4px;
-    max-width:300px;
-    margin:20px;
+    border:1px solid #aaa;
+    max-width:360px;
+    margin:20px 0;
     height: max-content;
+    width:30%;
 }
 
-form.news {
-    width:100%;
-    max-width:90%;
+.App.dark form.editForm {
+    background:#222;
 }
 
 form.editForm label {
     width:95%;
-    justify-content: start;
-    text-align: left;;
+    text-align:left;
 }
 
 form.editForm label span {
-    text-align:left;
     font-size:80%;
+    font-weight:500;
 }
 
 form.editForm input,
@@ -44,6 +44,14 @@ form.editForm select {
     display:block;
 }
 
+.App.dark form.editForm select {
+    background:#333;
+}
+
+.App.dark form.editForm input {
+    background: #333;
+}
+
 form.editForm input:focus,
 form.editForm select:focus {
     outline:none;
@@ -55,21 +63,26 @@ form.editForm select option {
     display:block;
 }
 
-form.editForm .buttons button {
-    background: #1976D2;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: bold;
-    border:none;
-    padding:12px 15px;
-    cursor: pointer;
+form.editForm button {
+    border-radius: 10px;
+    transition: .2s linear;
+    padding: 12px 15px;
 }
 
-form.editForm .buttons button:hover {
-    background: #1E88E5;
+.App.dark form.editForm button {
+    color: white;
+    background: #333;
 }
 
-form.editForm .buttons button:disabled {
+form.editForm button:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark form.editForm button:hover {
+    box-shadow: 0 0 0 2px #222, 0 0 0 4px #333;
+}
+
+form.editForm button:disabled {
     background: #999;
-    cursor: not-allowed;
+    cursor:not-allowed;
 }

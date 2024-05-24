@@ -1,24 +1,75 @@
 header {
-    display: flex;
-    background: #eee;
-    border-bottom: 1px solid #999;
+    display:flex;
+    background:#1a1a1a;
     justify-content: space-between;
     padding:10px 30px;
 }
 
 header .LogoGroup {
-    display: flex;
-    width: 60px;
+    display:flex;
+    flex-wrap:wrap;
     gap:15px;
 }
 
 header .LogoGroup h1 {
-    display:block;
-    width:100%;
     font-size:12px;
-    font-weight: bolder;
 }
 
-header .LogoGroup img {
-    max-height: 40px;
+header menu {
+    display:flex;
+    list-style:none;
+    margin:0;
+    padding:0;
+    gap: 15px;
+    line-height: 30px;
+}
+
+header menu li {
+    cursor: pointer;
+}
+
+header .timer {
+    line-height: 30px;
+}
+
+/* toggle-btn */
+.toggle-btn {
+    border-radius: 10px;
+    transition: .2s linear;
+    font-size: 0.9rem;
+    font-family: Source Sans\ 3, sans-serif;
+}
+
+.toggle-btn:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark .toggle-btn {
+    color: white;
+    background: #333;
+}
+
+.App.dark .toggle-btn:hover {
+    box-shadow: 0 0 0 2px #222, 0 0 0 4px #333;
+}
+
+/* edit-btn */
+.edit-btn {
+    border-radius: 10px;
+    transition: .2s linear;
+    font-size: 0.9rem;
+    font-family: Source Sans\ 3, sans-serif;
+}
+
+.edit-btn:hover {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
+}
+
+.App.dark .edit-btn {
+    color: white;
+    background: #333;
+}
+
+.App.dark .edit-btn:hover {
+    box-shadow: 0 0 0 2px #222, 0 0 0 4px #333;
 }

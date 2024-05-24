@@ -1,59 +1,59 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Form from "../form/Form.jsx";
-import Table from "../table/Table.jsx";
-import Index from "../index/Index.jsx";
-import "./style.css";
+import Table from "../table/Table.jsx"; 
+import Index from '../index/Index.jsx';
+import HeaderTag from "../headertag/HeaderTag.jsx"; 
 import Search from "../search/Search.jsx";
+import NewsList from "../lists/NewsList.jsx";
+import RatingList from "../ratingList/RatingList.jsx";
 
-export default function Container({ curPath }) {
-    const [row, setRow] = useState({});
-    const [query, setQuery] = useState("");
-    const [collectionName, setCollectionName] = useState(false);
-    console.log(curPath)
 
-    const handle = (value) => {
-        if (value.data) setRow(value.data[0]);
-    };
+export default function Container({ curPath, edit }) {
+    const [row, setRow] = useState('');
+    const [collectionName, setCollectionName] = useState(null);
+    const [query, setQuery] = useState('');
+
+    const handleUpdateRow = (value) => {
+        if(value.data)
+            setRow(value.data[0]);
+    }
 
     const handleSearch = (value) => {
-        if (value !== "") setQuery(value);
-    };
+        if(value)
+            setQuery(value);
+    }
 
     const setCollection = useCallback(async () => {
-        if (curPath !== "index" && curPath !== "/") setCollectionName(curPath);
-    }, [curPath]);
+        if(curPath!=='index' && curPath != null)
+            setCollectionName(curPath);
+    })
 
-    useEffect(() => {
-        setCollection();
-    }, [setCollection]);
+    useEffect(
+        () => { 
+            setCollection();
+        }, [setCollection]
+    )
 
-    return (
-        <div className="container">
-            {collectionName && (
-                <Search
-                    onChange={handleSearch}
-                    nameCollection={collectionName}
-                />
-            )}
-            {collectionName && (
-                <Form arValue={row} nameForm={collectionName}></Form>
-            )}
-            {
-                //если есть коллекция то выводим относительно коллекции
-                collectionName && ( // collectionName === 'collection_name'
-                    <Table
-                        onChange={handle}
-                        nameTable={collectionName}
-                        query={query}
-                    ></Table>
-                )
-            }
+    return ( 
+        <div className={'container'}>
+            <h1>
+                {collectionName && <HeaderTag name={collectionName}/>}
+            </h1>
 
+            { !collectionName && <Index></Index>}
             
+            { curPath === 'game' && <NewsList collectionName={collectionName}></NewsList>}
+            
+            { collectionName != 'undefined' && curPath === 'rating' && <RatingList collectionName={collectionName}></RatingList>}
+
             {
-                //Если нет названия коллекции, то выводим индексную страницу
-            !collectionName && <Index />
+                edit === true && 
+                    <>
+                    {collectionName && <Form arValue={row} nameForm={ collectionName }></Form>}
+                    {collectionName && <Table onChange={handleUpdateRow} nameTable={ collectionName } query={query}></Table>}
+                    </>
             }
+
         </div>
-    );
+    )
 }
